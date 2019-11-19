@@ -3,13 +3,7 @@ import requests
 import argparse
 from dotenv import load_dotenv
 
-load_dotenv()
-token = os.getenv('BITLINK_TOKEN')
-parser = argparse.ArgumentParser(
-    description='Введите вашу ссылку'
-)
-parser.add_argument('url', help='Введите ссылку')
-args = parser.parse_args()
+
 
 def shorten_link(url):
   headers = {'Authorization': 'Bearer '+token}
@@ -37,13 +31,15 @@ def get_check(url):
 
 
 if __name__== "__main__":
-  get_check(args.url)
-  try:
-    print(shorten_link(args.url))
-  except requests.exceptions.HTTPError:
-    print('Ooops,Your web address has shorten link,but look at static of count clicks')
+   load_dotenv()
+   token = os.getenv('BITLINK_TOKEN')
+   parser = argparse.ArgumentParser(
+        description='Введите вашу ссылку'
+    )
+   parser.add_argument('url', help='Введите ссылку')
+   args = parser.parse_args()
 
   try:
-    print(count_clicks(args.url))
+    print(get_check(args.url))
   except requests.exceptions.HTTPError:
-    print('Ooops,Your web address is not correct for show you count of clicks, write short link')
+    print('Ooops,try again')
